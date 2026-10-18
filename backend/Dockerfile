@@ -28,4 +28,8 @@ ENV TRANSFORMERS_OFFLINE=1
 
 ENV HF_HUB_OFFLINE=1
 
-CMD ["gunicorn", "-w", "1", "--timeout", "120", "-b", "0.0.0.0:7860", "app:rag_api"]
+# Starts 1 worker process to handle requests.
+# A worker can take up to 120 seconds without reporting activity before Gunicorn terminates and restarts it.
+# Listens on port 7860 across all network interfaces inside the container.
+# Imports the variable rag_api from the Python module app
+CMD ["gunicorn", "-w", "1", "--timeout", "240", "-b", "0.0.0.0:7860", "app:rag_api"]
